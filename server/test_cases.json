@@ -1,116 +1,116 @@
 [
     {
-        "spoken_text": "Tell me about the giant panda.",
+        "spoken_text": "Tell me some facts about the African elephant.",
         "expected_tool": "get_animal_info",
         "expected_args": {
-            "animal_name": "giant panda"
+            "animal_name": "African elephant"
         }
     },
     {
-        "spoken_text": "I want to know some facts about the red fox.",
+        "spoken_text": "I want to learn about the blue whale.",
         "expected_tool": "get_animal_info",
         "expected_args": {
-            "animal_name": "red fox"
+            "animal_name": "blue whale"
         }
     },
     {
-        "spoken_text": "Get me information about Venus.",
+        "spoken_text": "What is the planet Venus like?",
         "expected_tool": "get_planet_info",
         "expected_args": {
             "planet_name": "Venus"
         }
     },
     {
-        "spoken_text": "Tell me something interesting about the planet Saturn.",
+        "spoken_text": "Give me information about Saturn.",
         "expected_tool": "get_planet_info",
         "expected_args": {
             "planet_name": "Saturn"
         }
     },
     {
-        "spoken_text": "Give me information about the Atlantic Ocean.",
+        "spoken_text": "Tell me about the Atlantic Ocean.",
         "expected_tool": "get_ocean_info",
         "expected_args": {
             "ocean_name": "Atlantic Ocean"
         }
     },
     {
-        "spoken_text": "What can you tell me about the Pacific Ocean?",
+        "spoken_text": "I'd like to know more about the Arctic Ocean.",
         "expected_tool": "get_ocean_info",
         "expected_args": {
-            "ocean_name": "Pacific Ocean"
+            "ocean_name": "Arctic Ocean"
         }
     },
     {
-        "spoken_text": "Tell me the weather for Tokyo.",
+        "spoken_text": "What's the weather in Tokyo, Japan?",
         "expected_tool": "get_weather",
         "expected_args": {
-            "location": "Tokyo"
+            "location": "Tokyo, Japan"
         }
     },
     {
-        "spoken_text": "I need the weather forecast for Chicago, IL.",
+        "spoken_text": "Can you get the current weather for Paris?",
         "expected_tool": "get_weather",
         "expected_args": {
-            "location": "Chicago, IL"
+            "location": "Paris"
         }
     },
     {
-        "spoken_text": "Turn on the living room lights.",
+        "spoken_text": "Turn on the lights in the bedroom.",
         "expected_tool": "turn_on_lights",
         "expected_args": {
-            "room": "living room"
+            "room": "bedroom"
         }
     },
     {
-        "spoken_text": "Could you please turn on the lights in the garage?",
+        "spoken_text": "Please switch on the garage lights.",
         "expected_tool": "turn_on_lights",
         "expected_args": {
             "room": "garage"
         }
     },
     {
-        "spoken_text": "Turn off the lights in the kitchen.",
+        "spoken_text": "Turn off the kitchen lights.",
         "expected_tool": "turn_off_lights",
         "expected_args": {
             "room": "kitchen"
         }
     },
     {
-        "spoken_text": "Please switch off the bedroom lights.",
+        "spoken_text": "Can you turn the lights off in the living room?",
         "expected_tool": "turn_off_lights",
         "expected_args": {
-            "room": "bedroom"
+            "room": "living room"
         }
     },
     {
-        "spoken_text": "Can you generate a report on renewable energy sources?",
+        "spoken_text": "Generate a report on quarterly sales performance.",
         "expected_tool": "generate_report",
         "expected_args": {
-            "topic": "renewable energy sources"
+            "topic": "quarterly sales performance"
         }
     },
     {
-        "spoken_text": "Create a report about the global economy.",
+        "spoken_text": "Create a report about the effects of climate change.",
         "expected_tool": "generate_report",
         "expected_args": {
-            "topic": "global economy"
+            "topic": "effects of climate change"
         }
     },
     {
-        "spoken_text": "Generate a Python script to reverse a string.",
+        "spoken_text": "Generate a javascript function to sort an array of numbers.",
         "expected_tool": "generate_code",
         "expected_args": {
-            "language": "Python",
-            "description": "a script to reverse a string"
+            "language": "javascript",
+            "description": "a function to sort an array of numbers"
         }
     },
     {
-        "spoken_text": "Write me some Javascript to create a simple countdown timer.",
+        "spoken_text": "Write me a python script that reads a CSV file and prints the first 5 rows.",
         "expected_tool": "generate_code",
         "expected_args": {
-            "language": "Javascript",
-            "description": "create a simple countdown timer"
+            "language": "python",
+            "description": "a script that reads a CSV file and prints the first 5 rows"
         }
     }
 ]

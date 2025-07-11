@@ -5,7 +5,8 @@ import os
 PROJECT_ID = "cloud-llm-preview1"
 LOCATION = "us-central1"
 # The model used by your LiveAPI being tested
-LIVE_API_MODEL_NAME = 'gemini-live-2.5-flash'
+#LIVE_API_MODEL_NAME = 'gemini-live-2.5-flash'
+LIVE_API_MODEL_NAME = 'gemini-live-2.5-flash-preview-native-audio'
 
 # --- Text-to-Speech (TTS) Parameters for Chirp 3 ---
 TTS_LOCATION = "global"
