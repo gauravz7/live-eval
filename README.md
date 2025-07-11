@@ -50,7 +50,7 @@ Follow these steps to run the automated test suite:
     ```bash
     python pythonsdk-eval-live/server/generate_eval_data.py
     ```
-    This will use Gemini 1.5 Pro to create a fresh set of test cases and save them to `test_cases.json`.
+    This will use Gemini 2.5 Pro to create a fresh set of test cases and save them to `test_cases.json`.
 
 ### Step 3: Run the Automated Test
 
