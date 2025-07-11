@@ -6,7 +6,7 @@ This project provides a robust, automated testing framework for a voice-controll
 
 The framework includes a specialized evaluation server for running automated tests, with features for audio recording, detailed logging, and single-turn session management.
 
-A key feature of this framework is the ability to dynamically generate test cases using Gemini 1.5 Pro, ensuring a diverse and comprehensive set of evaluation data.
+A key feature of this framework is the ability to dynamically generate test cases using Gemini 2.5 Pro, ensuring a diverse and comprehensive set of evaluation data.
 
 ## 2. Architecture
 
@@ -19,7 +19,7 @@ The project is composed of several key files, each with a specific role:
 *   **`server_eval.py`**: The evaluation server, which includes features for audio recording, detailed logging, and single-turn session management.
 *   **`run_test.py`**: The main orchestration script for the testing workflow. It loads test cases, sends them to the evaluation server, and analyzes the results.
 *   **`test_cases.json`**: A JSON file containing the test cases to be used by the evaluation script.
-*   **`generate_eval_data.py`**: A powerful tool that uses Gemini 1.5 Pro to dynamically generate test cases based on the tool definitions in `tools.py`.
+*   **`generate_eval_data.py`**: A powerful tool that uses Gemini 2.5 Pro to dynamically generate test cases based on the tool definitions in `tools.py`.
 
 ## 3. Flow Diagram
 
