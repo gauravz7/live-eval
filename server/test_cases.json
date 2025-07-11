@@ -1,0 +1,116 @@
+[
+    {
+        "spoken_text": "Tell me about the giant panda.",
+        "expected_tool": "get_animal_info",
+        "expected_args": {
+            "animal_name": "giant panda"
+        }
+    },
+    {
+        "spoken_text": "I want to know some facts about the red fox.",
+        "expected_tool": "get_animal_info",
+        "expected_args": {
+            "animal_name": "red fox"
+        }
+    },
+    {
+        "spoken_text": "Get me information about Venus.",
+        "expected_tool": "get_planet_info",
+        "expected_args": {
+            "planet_name": "Venus"
+        }
+    },
+    {
+        "spoken_text": "Tell me something interesting about the planet Saturn.",
+        "expected_tool": "get_planet_info",
+        "expected_args": {
+            "planet_name": "Saturn"
+        }
+    },
+    {
+        "spoken_text": "Give me information about the Atlantic Ocean.",
+        "expected_tool": "get_ocean_info",
+        "expected_args": {
+            "ocean_name": "Atlantic Ocean"
+        }
+    },
+    {
+        "spoken_text": "What can you tell me about the Pacific Ocean?",
+        "expected_tool": "get_ocean_info",
+        "expected_args": {
+            "ocean_name": "Pacific Ocean"
+        }
+    },
+    {
+        "spoken_text": "Tell me the weather for Tokyo.",
+        "expected_tool": "get_weather",
+        "expected_args": {
+            "location": "Tokyo"
+        }
+    },
+    {
+        "spoken_text": "I need the weather forecast for Chicago, IL.",
+        "expected_tool": "get_weather",
+        "expected_args": {
+            "location": "Chicago, IL"
+        }
+    },
+    {
+        "spoken_text": "Turn on the living room lights.",
+        "expected_tool": "turn_on_lights",
+        "expected_args": {
+            "room": "living room"
+        }
+    },
+    {
+        "spoken_text": "Could you please turn on the lights in the garage?",
+        "expected_tool": "turn_on_lights",
+        "expected_args": {
+            "room": "garage"
+        }
+    },
+    {
+        "spoken_text": "Turn off the lights in the kitchen.",
+        "expected_tool": "turn_off_lights",
+        "expected_args": {
+            "room": "kitchen"
+        }
+    },
+    {
+        "spoken_text": "Please switch off the bedroom lights.",
+        "expected_tool": "turn_off_lights",
+        "expected_args": {
+            "room": "bedroom"
+        }
+    },
+    {
+        "spoken_text": "Can you generate a report on renewable energy sources?",
+        "expected_tool": "generate_report",
+        "expected_args": {
+            "topic": "renewable energy sources"
+        }
+    },
+    {
+        "spoken_text": "Create a report about the global economy.",
+        "expected_tool": "generate_report",
+        "expected_args": {
+            "topic": "global economy"
+        }
+    },
+    {
+        "spoken_text": "Generate a Python script to reverse a string.",
+        "expected_tool": "generate_code",
+        "expected_args": {
+            "language": "Python",
+            "description": "a script to reverse a string"
+        }
+    },
+    {
+        "spoken_text": "Write me some Javascript to create a simple countdown timer.",
+        "expected_tool": "generate_code",
+        "expected_args": {
+            "language": "Javascript",
+            "description": "create a simple countdown timer"
+        }
+    }
+]
