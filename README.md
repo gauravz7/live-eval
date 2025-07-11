@@ -65,3 +65,54 @@ Follow these steps to run the automated test suite:
     ```
 
 The script will then execute the test cases, and you will see a final accuracy report in the console. All recorded audio and logs will be saved in the `pythonsdk-eval-live/server/results/` directory.
+
+## 5. Sample Output
+
+Here is an example of the output you can expect when running the test script:
+
+```
+--- Running Test Case 6/16 ---
+Spoken Text: I'd like to know more about the Arctic Ocean.
+🔊 Generating audio for: 'I'd like to know more about the Arctic O...'
+Adding 3s of silence padding at the beginning and end.
+Connecting to WebSocket at: ws://localhost:8765
+Streaming 250936 bytes in 246 chunks...
+Finished streaming audio.
+Waiting for server to complete the turn...
+✅ Received turn_complete signal from server.
+
+--- Running Test Case 7/16 ---
+Spoken Text: What's the weather in Tokyo, Japan?
+🔊 Generating audio for: 'What's the weather in Tokyo, Japan?...'
+Adding 3s of silence padding at the beginning and end.
+Connecting to WebSocket at: ws://localhost:8765
+Streaming 256056 bytes in 251 chunks...
+Finished streaming audio.
+Waiting for server to complete the turn...
+✅ Received turn_complete signal from server.
+
+...
+
+--- Test Execution Finished ---
+
+--- Analyzing Results ---
+
+--- Detailed Test Case Results ---
+
+--- Test Case 1: Tell me some facts about the African elephant. ---
+✅ PASSED: Correctly called 'get_animal_info' in 0.02ms.
+
+--- Test Case 2: I want to learn about the blue whale. ---
+✅ PASSED: Correctly called 'get_animal_info' in 0.02ms.
+
+...
+
+--- Test Run Complete ---
+Date: Friday, July 11, 2025 at 07:49 PM
+-----------------------------------------------------
+Total Test Cases: 16
+✅ Passed: 16
+❌ Failed: 0
+📈 Accuracy: 100.0%
+-----------------------------------------------------
+```
