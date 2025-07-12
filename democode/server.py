@@ -14,7 +14,7 @@ from google.genai.types import (
 )
 
 # Import common components
-from common import (
+from config import (
     BaseWebSocketServer,
     logger,
     PROJECT_ID,

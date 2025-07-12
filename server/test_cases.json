@@ -1,116 +1,91 @@
 [
     {
-        "spoken_text": "Tell me some facts about the African elephant.",
-        "expected_tool": "get_animal_info",
+        "test_id": "calculate_investment_growth_1",
+        "spoken_text": "If I put ten thousand dollars aside for 15 years, what would it become assuming a 5.5% annual rate of return?",
+        "expected_tool": "calculate_investment_growth",
         "expected_args": {
-            "animal_name": "African elephant"
+            "principal": 10000,
+            "rate": 5.5,
+            "years": 15
         }
     },
     {
-        "spoken_text": "I want to learn about the blue whale.",
-        "expected_tool": "get_animal_info",
+        "test_id": "calculate_investment_growth_2",
+        "spoken_text": "Show me the projection for a $2500 initial investment over a decade with an interest rate of seven percent.",
+        "expected_tool": "calculate_investment_growth",
         "expected_args": {
-            "animal_name": "blue whale"
+            "principal": 2500,
+            "rate": 7,
+            "years": 10
         }
     },
     {
-        "spoken_text": "What is the planet Venus like?",
-        "expected_tool": "get_planet_info",
+        "test_id": "get_timezone_info_3",
+        "spoken_text": "Is it a reasonable hour to call my business partner in Dubai?",
+        "expected_tool": "get_timezone_info",
         "expected_args": {
-            "planet_name": "Venus"
+            "city": "Dubai"
         }
     },
     {
-        "spoken_text": "Give me information about Saturn.",
-        "expected_tool": "get_planet_info",
+        "test_id": "get_timezone_info_4",
+        "spoken_text": "I need to schedule a meeting for 9 AM in my local time, what time would that be in Paris?",
+        "expected_tool": "get_timezone_info",
         "expected_args": {
-            "planet_name": "Saturn"
+            "city": "Paris"
         }
     },
     {
-        "spoken_text": "Tell me about the Atlantic Ocean.",
-        "expected_tool": "get_ocean_info",
+        "test_id": "get_movie_recommendation_5",
+        "spoken_text": "I want to watch something from the 80s that's out of this world, maybe involving spaceships.",
+        "expected_tool": "get_movie_recommendation",
         "expected_args": {
-            "ocean_name": "Atlantic Ocean"
+            "genre": "Sci-Fi",
+            "decade": "1980s"
         }
     },
     {
-        "spoken_text": "I'd like to know more about the Arctic Ocean.",
-        "expected_tool": "get_ocean_info",
+        "test_id": "get_movie_recommendation_6",
+        "spoken_text": "Find me a movie that will make me cry.",
+        "expected_tool": "get_movie_recommendation",
         "expected_args": {
-            "ocean_name": "Arctic Ocean"
+            "genre": "Drama"
         }
     },
     {
-        "spoken_text": "What's the weather in Tokyo, Japan?",
-        "expected_tool": "get_weather",
+        "test_id": "log_water_intake_7",
+        "spoken_text": "Just drank a large glass of water, please add 2 cups to my tracker.",
+        "expected_tool": "log_water_intake",
         "expected_args": {
-            "location": "Tokyo, Japan"
+            "amount": 2,
+            "unit": "cup"
         }
     },
     {
-        "spoken_text": "Can you get the current weather for Paris?",
-        "expected_tool": "get_weather",
+        "test_id": "log_water_intake_8",
+        "spoken_text": "Make a note that I finished my 750ml water bottle.",
+        "expected_tool": "log_water_intake",
         "expected_args": {
-            "location": "Paris"
+            "amount": 750,
+            "unit": "ml"
         }
     },
     {
-        "spoken_text": "Turn on the lights in the bedroom.",
-        "expected_tool": "turn_on_lights",
+        "test_id": "send_quick_note_9",
+        "spoken_text": "Tell my project manager I've pushed the latest code.",
+        "expected_tool": "send_quick_note",
         "expected_args": {
-            "room": "bedroom"
+            "contact_name": "Project Manager",
+            "message": "I've pushed the latest code."
         }
     },
     {
-        "spoken_text": "Please switch on the garage lights.",
-        "expected_tool": "turn_on_lights",
+        "test_id": "send_quick_note_10",
+        "spoken_text": "Send a note to David asking 'Did you get my email?'",
+        "expected_tool": "send_quick_note",
         "expected_args": {
-            "room": "garage"
-        }
-    },
-    {
-        "spoken_text": "Turn off the kitchen lights.",
-        "expected_tool": "turn_off_lights",
-        "expected_args": {
-            "room": "kitchen"
-        }
-    },
-    {
-        "spoken_text": "Can you turn the lights off in the living room?",
-        "expected_tool": "turn_off_lights",
-        "expected_args": {
-            "room": "living room"
-        }
-    },
-    {
-        "spoken_text": "Generate a report on quarterly sales performance.",
-        "expected_tool": "generate_report",
-        "expected_args": {
-            "topic": "quarterly sales performance"
-        }
-    },
-    {
-        "spoken_text": "Create a report about the effects of climate change.",
-        "expected_tool": "generate_report",
-        "expected_args": {
-            "topic": "effects of climate change"
-        }
-    },
-    {
-        "spoken_text": "Generate a javascript function to sort an array of numbers.",
-        "expected_tool": "generate_code",
-        "expected_args": {
-            "language": "javascript",
-            "description": "a function to sort an array of numbers"
-        }
-    },
-    {
-        "spoken_text": "Write me a python script that reads a CSV file and prints the first 5 rows.",
-        "expected_tool": "generate_code",
-        "expected_args": {
-            "language": "python",
-            "description": "a script that reads a CSV file and prints the first 5 rows"
+            "contact_name": "David",
+            "message": "Did you get my email?"
         }
     }
 ]

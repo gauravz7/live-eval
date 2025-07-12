@@ -2,119 +2,125 @@
 
 TOOLS_DEFINITION = [
   {
-    "name": "get_animal_info",
-    "description": "Get information about a specific animal.",
+    "name": "calculate_investment_growth",
+    "description": "Calculates the future value of an investment with compound interest.",
     "parameters": {
-        "type": "object",
-        "properties": {
-            "animal_name": {
-                "type": "string",
-                "description": "The name of the animal."
-            }
+      "type": "object",
+      "properties": {
+        "principal": {
+          "type": "number",
+          "description": "The initial principal amount of the investment.",
+          "minimum": 1.0
         },
-        "required": ["animal_name"]
+        "rate": {
+          "type": "number",
+          "description": "The annual interest rate as a percentage, e.g., enter 5 for 5%.",
+          "minimum": 0.0
+        },
+        "years": {
+          "type": "number",
+          "description": "The number of years the investment will grow.",
+          "minimum": 1.0
+        }
+      },
+      "required": [
+        "principal",
+        "rate",
+        "years"
+      ]
     }
   },
   {
-    "name": "get_planet_info",
-    "description": "Get information about a specific planet.",
+    "name": "get_timezone_info",
+    "description": "Gets the current time and timezone information for a specific city.",
     "parameters": {
-        "type": "object",
-        "properties": {
-            "planet_name": {
-                "type": "string",
-                "description": "The name of the planet."
-            }
-        },
-        "required": ["planet_name"]
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string",
+          "description": "The name of the city to get timezone information for, e.g., 'Tokyo' or 'San Francisco'."
+        }
+      },
+      "required": [
+        "city"
+      ]
     }
   },
   {
-    "name": "get_ocean_info",
-    "description": "Get information about a specific ocean.",
+    "name": "get_movie_recommendation",
+    "description": "Provides a movie recommendation based on a specified genre.",
     "parameters": {
-        "type": "object",
-        "properties": {
-            "ocean_name": {
-                "type": "string",
-                "description": "The name of the ocean."
-            }
+      "type": "object",
+      "properties": {
+        "genre": {
+          "type": "string",
+          "description": "The genre of the movie to recommend.",
+          "enum": [
+            "Action",
+            "Comedy",
+            "Drama",
+            "Sci-Fi",
+            "Horror",
+            "Thriller",
+            "Romance"
+          ]
         },
-        "required": ["ocean_name"]
+        "decade": {
+          "type": "string",
+          "description": "Optional: The decade the movie was released in, e.g., '1990s' or '2010s'."
+        }
+      },
+      "required": [
+        "genre"
+      ]
     }
   },
   {
-    "name": "get_weather",
-    "description": "Get the current weather information for a given location.",
+    "name": "log_water_intake",
+    "description": "Logs the amount of water consumed to a daily health tracker.",
     "parameters": {
-        "type": "object",
-        "properties": {
-            "location": {
-                "type": "string",
-                "description": "The city and state, e.g., San Francisco, CA"
-            }
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The amount of water consumed.",
+          "minimum": 1.0
         },
-        "required": ["location"]
+        "unit": {
+          "type": "string",
+          "description": "The unit of measurement for the water amount.",
+          "enum": [
+            "ml",
+            "oz",
+            "cup"
+          ],
+          "default": "ml"
+        }
+      },
+      "required": [
+        "amount"
+      ]
     }
   },
   {
-    "name": "turn_on_lights",
-    "description": "Turn on the smart lights in a specific room or garage room.",
+    "name": "send_quick_note",
+    "description": "Sends a short note or reminder to a specified contact.",
     "parameters": {
-        "type": "object",
-        "properties": {
-            "room": {
-                "type": "string",
-                "description": "The room where the lights should be turned on."
-            }
+      "type": "object",
+      "properties": {
+        "contact_name": {
+          "type": "string",
+          "description": "The name of the contact to send the note to, e.g., 'Mom' or 'Alex'."
         },
-        "required": ["room"]
-    }
-  },
-  {
-    "name": "turn_off_lights",
-    "description": "Turn off the smart lights in a specific room or garage room.",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "room": {
-                "type": "string",
-                "description": "The room where the lights should be turned off."
-            }
-        },
-        "required": ["room"]
-    }
-  },
-  {
-    "name": "generate_report",
-    "description": "Generate a report on a specific topic.",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "topic": {
-                "type": "string",
-                "description": "The topic for the report."
-            }
-        },
-        "required": ["topic"]
-    }
-  },
-  {
-    "name": "generate_code",
-    "description": "Generate code in a specific programming language.",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "language": {
-                "type": "string",
-                "description": "The programming language."
-            },
-            "description": {
-                "type": "string",
-                "description": "A description of the code to generate."
-            }
-        },
-        "required": ["language", "description"]
+        "message": {
+          "type": "string",
+          "description": "The short message or note content to send."
+        }
+      },
+      "required": [
+        "contact_name",
+        "message"
+      ]
     }
   }
 ]

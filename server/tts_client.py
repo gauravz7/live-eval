@@ -39,9 +39,9 @@ def convert_text_to_audio(text: str) -> bytes:
         # Generate 3 seconds of silence by creating raw silent audio data.
         # 16kHz, 16-bit mono audio means 16000 * 2 = 32000 bytes per second.
         # 3 seconds of silence = 32000 * 3 = 96000 bytes of zeros.
-        silent_audio = b'\x00' * 96000
+        silent_audio = b'\x00' * 32000
         
-        print(f"Adding 3s of silence padding at the beginning and end.")
+        print(f"Adding 1s of silence padding at the beginning and end.")
         
         # Combine the audio parts
         padded_audio = silent_audio + response.audio_content + silent_audio

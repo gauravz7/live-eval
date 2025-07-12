@@ -35,9 +35,6 @@ async def run_test_cases(test_cases: List[Dict[str, Any]]):
     """
     Executes the generated test cases against the LiveAPI server.
     """
-    if os.path.exists(config.SERVER_LOG_FILE):
-        os.remove(config.SERVER_LOG_FILE)
-
     for i, test_case in enumerate(test_cases):
         print(f"\n--- Running Test Case {i+1}/{len(test_cases)} ---")
         print(f"Spoken Text: {test_case['spoken_text']}")
@@ -52,6 +49,12 @@ async def run_test_cases(test_cases: List[Dict[str, Any]]):
             live_api_endpoint = "ws://localhost:8765"
             print(f"Connecting to WebSocket at: {live_api_endpoint}")
             async with websockets.connect(live_api_endpoint) as websocket:
+                # Send the test_id to the server
+                await websocket.send(json.dumps({
+                    "type": "start_test",
+                    "test_id": test_case['test_id']
+                }))
+
                 # Stream the audio in chunks to simulate a real-time feed
                 chunk_size = 1024  # Send 1KB chunks
                 total_chunks = (len(audio_content) + chunk_size - 1) // chunk_size
@@ -80,7 +83,7 @@ async def run_test_cases(test_cases: List[Dict[str, Any]]):
                     try:
                         message = await asyncio.wait_for(websocket.recv(), timeout=5.0)
                         data = json.loads(message)
-                        if data.get("type") == "turn_complete":
+                        if data.get("type") == "turn_complete" or data.get("type") == "ready":
                             print("✅ Received turn_complete signal from server.")
                             break
                     except asyncio.TimeoutError:
@@ -117,15 +120,18 @@ def analyze_results(test_cases: List[Dict[str, Any]]):
     failed_tests = 0
     
     print("\n--- Detailed Test Case Results ---")
-    for i, expected in enumerate(test_cases):
-        print(f"\n--- Test Case {i+1}: {expected['spoken_text']} ---")
+    actual_calls_by_id = {call['test_id']: call for call in actual_calls}
+
+    for expected in test_cases:
+        test_id = expected['test_id']
+        print(f"\n--- Test Case {test_id}: {expected['spoken_text']} ---")
         
-        if i >= len(actual_calls):
+        if test_id not in actual_calls_by_id:
             print("❌ FAILED: No tool call was logged for this test case.")
             failed_tests += 1
             continue
 
-        actual = actual_calls[i]
+        actual = actual_calls_by_id[test_id]
         errors = []
 
         # 1. Check if a tool was called when one was expected
@@ -165,6 +171,10 @@ def analyze_results(test_cases: List[Dict[str, Any]]):
 if __name__ == "__main__":
     # Initialize the Gemini client (if needed for dynamic test case generation)
     # genai.configure(api_key="YOUR_API_KEY")
+
+    # Remove the log file before starting the test
+    if os.path.exists(config.SERVER_LOG_FILE):
+        os.remove(config.SERVER_LOG_FILE)
 
     # Step 1: Load Test Cases from JSON using a robust path
     script_dir = os.path.dirname(os.path.abspath(__file__))

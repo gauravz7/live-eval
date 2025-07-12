@@ -23,6 +23,7 @@ from google.genai.types import (
 # --- Pydantic Schemas for Controlled Generation ---
 class TestCase(BaseModel):
     """Defines the structure for a single test case."""
+    test_id: str = Field(..., description="A unique identifier for the test case.")
     spoken_text: str = Field(..., description="A natural language phrase a user would speak to invoke the tool.")
     expected_tool: str = Field(..., description="The exact name of the tool that should be called.")
     expected_args: Optional[Dict[str, Any]] = Field(None, description="A JSON object of arguments. Should be null if no arguments.")
@@ -38,6 +39,7 @@ def generate_prompt(tools_definition):
 You are an expert test case generator for a voice-controlled AI system.
 Your task is to generate a list of test cases based on the provided tool definitions.
 For each tool, create exactly two unique test cases.
+Make it ambigous enough that the model has to think about the tool call, but not so ambiguous that it can't figure out what to do.
 
 **Tool Definitions:**
 ```json
@@ -79,7 +81,11 @@ def main():
         output_path = os.path.join(script_dir, "test_cases.json")
         
         # Convert Pydantic models to a list of dicts for JSON serialization
-        test_cases_list = [test_case.dict() for test_case in parsed_response.test_cases]
+        test_cases_list = []
+        for i, test_case in enumerate(parsed_response.test_cases):
+            test_case_dict = test_case.dict()
+            test_case_dict['test_id'] = f"{test_case.expected_tool}_{i+1}"
+            test_cases_list.append(test_case_dict)
         
         with open(output_path, 'w') as f:
             json.dump(test_cases_list, f, indent=4)
