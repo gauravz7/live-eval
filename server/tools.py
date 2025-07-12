@@ -2,53 +2,102 @@
 
 TOOLS_DEFINITION = [
   {
-    "name": "calculate_investment_growth",
-    "description": "Calculates the future value of an investment with compound interest.",
+    "name": "set_reminder",
+    "description": "Sets a reminder for a specific task at a given time.",
     "parameters": {
       "type": "object",
       "properties": {
-        "principal": {
-          "type": "number",
-          "description": "The initial principal amount of the investment.",
-          "minimum": 1.0
+        "task": {
+          "type": "string",
+          "description": "The description of the task to be reminded about. For example, 'call mom'."
         },
-        "rate": {
-          "type": "number",
-          "description": "The annual interest rate as a percentage, e.g., enter 5 for 5%.",
-          "minimum": 0.0
-        },
-        "years": {
-          "type": "number",
-          "description": "The number of years the investment will grow.",
-          "minimum": 1.0
+        "time": {
+          "type": "string",
+          "description": "When to set the reminder. For example, 'in 10 minutes' or 'at 3pm'."
         }
       },
       "required": [
-        "principal",
-        "rate",
-        "years"
+        "task",
+        "time"
       ]
     }
   },
   {
-    "name": "get_timezone_info",
-    "description": "Gets the current time and timezone information for a specific city.",
+    "name": "get_weather_forecast",
+    "description": "Retrieves the current weather forecast for a specified location.",
     "parameters": {
       "type": "object",
       "properties": {
-        "city": {
+        "location": {
           "type": "string",
-          "description": "The name of the city to get timezone information for, e.g., 'Tokyo' or 'San Francisco'."
+          "description": "The city for which to get the weather forecast, e.g., 'London' or 'Tokyo'."
+        },
+        "units": {
+          "type": "string",
+          "description": "The temperature unit.",
+          "enum": [
+            "celsius",
+            "fahrenheit"
+          ],
+          "default": "celsius"
         }
       },
       "required": [
-        "city"
+        "location"
+      ]
+    }
+  },
+  {
+    "name": "currency_converter",
+    "description": "Converts an amount from one currency to another.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "description": "The amount of money to convert."
+        },
+        "from_currency": {
+          "type": "string",
+          "description": "The three-letter currency code to convert from, e.g., 'USD'."
+        },
+        "to_currency": {
+          "type": "string",
+          "description": "The three-letter currency code to convert to, e.g., 'EUR'."
+        }
+      },
+      "required": [
+        "amount",
+        "from_currency",
+        "to_currency"
+      ]
+    }
+  },
+  {
+    "name": "calculate_tip",
+    "description": "Calculates the tip for a given bill amount and percentage.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "bill_amount": {
+          "type": "number",
+          "description": "The total amount of the bill.",
+          "minimum": 0.0
+        },
+        "tip_percentage": {
+          "type": "number",
+          "description": "The percentage of the bill to leave as a tip.",
+          "default": 15.0
+        }
+      },
+      "required": [
+        "bill_amount"
       ]
     }
   },
   {
     "name": "get_movie_recommendation",
-    "description": "Provides a movie recommendation based on a specified genre.",
+    "description": "Recommends a movie based on a specified genre.",
     "parameters": {
       "type": "object",
       "properties": {
@@ -56,18 +105,13 @@ TOOLS_DEFINITION = [
           "type": "string",
           "description": "The genre of the movie to recommend.",
           "enum": [
-            "Action",
             "Comedy",
+            "Action",
             "Drama",
             "Sci-Fi",
             "Horror",
-            "Thriller",
             "Romance"
           ]
-        },
-        "decade": {
-          "type": "string",
-          "description": "Optional: The decade the movie was released in, e.g., '1990s' or '2010s'."
         }
       },
       "required": [
@@ -76,8 +120,30 @@ TOOLS_DEFINITION = [
     }
   },
   {
+    "name": "start_timer",
+    "description": "Starts a timer for a specified duration.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "duration_minutes": {
+          "type": "number",
+          "description": "The duration of the timer in minutes.",
+          "minimum": 1.0,
+          "maximum": 180.0
+        },
+        "timer_name": {
+          "type": "string",
+          "description": "An optional name for the timer, e.g., 'pizza oven'."
+        }
+      },
+      "required": [
+        "duration_minutes"
+      ]
+    }
+  },
+  {
     "name": "log_water_intake",
-    "description": "Logs the amount of water consumed to a daily health tracker.",
+    "description": "Logs the amount of water consumed.",
     "parameters": {
       "type": "object",
       "properties": {
@@ -92,7 +158,7 @@ TOOLS_DEFINITION = [
           "enum": [
             "ml",
             "oz",
-            "cup"
+            "cups"
           ],
           "default": "ml"
         }
@@ -103,24 +169,60 @@ TOOLS_DEFINITION = [
     }
   },
   {
-    "name": "send_quick_note",
-    "description": "Sends a short note or reminder to a specified contact.",
+    "name": "find_recipe",
+    "description": "Finds a recipe based on a primary ingredient.",
     "parameters": {
       "type": "object",
       "properties": {
-        "contact_name": {
+        "ingredient": {
           "type": "string",
-          "description": "The name of the contact to send the note to, e.g., 'Mom' or 'Alex'."
+          "description": "The main ingredient to search for in a recipe, e.g., 'chicken'."
         },
-        "message": {
+        "cuisine_type": {
           "type": "string",
-          "description": "The short message or note content to send."
+          "description": "Optional: The type of cuisine, e.g., 'Italian' or 'Mexican'."
         }
       },
       "required": [
-        "contact_name",
-        "message"
+        "ingredient"
       ]
+    }
+  },
+  {
+    "name": "get_world_time",
+    "description": "Gets the current time in a specified city.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string",
+          "description": "The city for which to find the current time, e.g., 'New York'."
+        }
+      },
+      "required": [
+        "city"
+      ]
+    }
+  },
+  {
+    "name": "tell_a_joke",
+    "description": "Tells a joke, optionally from a specific category.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "description": "The category of the joke.",
+          "enum": [
+            "any",
+            "programming",
+            "puns",
+            "dad"
+          ],
+          "default": "any"
+        }
+      },
+      "required": []
     }
   }
 ]

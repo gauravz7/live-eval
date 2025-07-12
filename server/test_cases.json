@@ -1,91 +1,177 @@
 [
     {
-        "test_id": "calculate_investment_growth_1",
-        "spoken_text": "If I put ten thousand dollars aside for 15 years, what would it become assuming a 5.5% annual rate of return?",
-        "expected_tool": "calculate_investment_growth",
+        "test_id": "set_reminder_1",
+        "spoken_text": "Don't let me forget to submit my report by 5 PM tomorrow.",
+        "expected_tool": "set_reminder",
         "expected_args": {
-            "principal": 10000,
-            "rate": 5.5,
-            "years": 15
+            "task": "submit my report",
+            "time": "tomorrow at 5 PM"
         }
     },
     {
-        "test_id": "calculate_investment_growth_2",
-        "spoken_text": "Show me the projection for a $2500 initial investment over a decade with an interest rate of seven percent.",
-        "expected_tool": "calculate_investment_growth",
+        "test_id": "set_reminder_2",
+        "spoken_text": "In 45 minutes, I need to remember to check the roast.",
+        "expected_tool": "set_reminder",
         "expected_args": {
-            "principal": 2500,
-            "rate": 7,
-            "years": 10
+            "task": "check the roast",
+            "time": "in 45 minutes"
         }
     },
     {
-        "test_id": "get_timezone_info_3",
-        "spoken_text": "Is it a reasonable hour to call my business partner in Dubai?",
-        "expected_tool": "get_timezone_info",
+        "test_id": "get_weather_forecast_3",
+        "spoken_text": "What's the temperature like in Berlin?",
+        "expected_tool": "get_weather_forecast",
         "expected_args": {
-            "city": "Dubai"
+            "location": "Berlin",
+            "units": "celsius"
         }
     },
     {
-        "test_id": "get_timezone_info_4",
-        "spoken_text": "I need to schedule a meeting for 9 AM in my local time, what time would that be in Paris?",
-        "expected_tool": "get_timezone_info",
+        "test_id": "get_weather_forecast_4",
+        "spoken_text": "Will I need a jacket in New York today? I use the Fahrenheit scale.",
+        "expected_tool": "get_weather_forecast",
         "expected_args": {
-            "city": "Paris"
+            "location": "New York",
+            "units": "fahrenheit"
         }
     },
     {
-        "test_id": "get_movie_recommendation_5",
-        "spoken_text": "I want to watch something from the 80s that's out of this world, maybe involving spaceships.",
+        "test_id": "currency_converter_5",
+        "spoken_text": "How much is 100 Canadian dollars in US dollars?",
+        "expected_tool": "currency_converter",
+        "expected_args": {
+            "amount": 100,
+            "from_currency": "CAD",
+            "to_currency": "USD"
+        }
+    },
+    {
+        "test_id": "currency_converter_6",
+        "spoken_text": "If I convert 5000 yen to euros, what would I have?",
+        "expected_tool": "currency_converter",
+        "expected_args": {
+            "amount": 5000,
+            "from_currency": "JPY",
+            "to_currency": "EUR"
+        }
+    },
+    {
+        "test_id": "calculate_tip_7",
+        "spoken_text": "The dinner check was eighty-seven fifty, what's a normal amount to leave for the server?",
+        "expected_tool": "calculate_tip",
+        "expected_args": {
+            "bill_amount": 87.5,
+            "tip_percentage": 15.0
+        }
+    },
+    {
+        "test_id": "calculate_tip_8",
+        "spoken_text": "Let's be generous with the tip on our $210 bill, how about 22 percent?",
+        "expected_tool": "calculate_tip",
+        "expected_args": {
+            "bill_amount": 210,
+            "tip_percentage": 22.0
+        }
+    },
+    {
+        "test_id": "get_movie_recommendation_9",
+        "spoken_text": "I feel like watching a love story tonight, what do you suggest?",
         "expected_tool": "get_movie_recommendation",
         "expected_args": {
-            "genre": "Sci-Fi",
-            "decade": "1980s"
+            "genre": "Romance"
         }
     },
     {
-        "test_id": "get_movie_recommendation_6",
-        "spoken_text": "Find me a movie that will make me cry.",
+        "test_id": "get_movie_recommendation_10",
+        "spoken_text": "Suggest a film that's out of this world, maybe with aliens or spaceships.",
         "expected_tool": "get_movie_recommendation",
         "expected_args": {
-            "genre": "Drama"
+            "genre": "Sci-Fi"
         }
     },
     {
-        "test_id": "log_water_intake_7",
-        "spoken_text": "Just drank a large glass of water, please add 2 cups to my tracker.",
+        "test_id": "start_timer_11",
+        "spoken_text": "I'm steeping tea, start a countdown for four minutes.",
+        "expected_tool": "start_timer",
+        "expected_args": {
+            "duration_minutes": 4,
+            "timer_name": "tea"
+        }
+    },
+    {
+        "test_id": "start_timer_12",
+        "spoken_text": "Set a timer for one and a half hours for the bread to rise.",
+        "expected_tool": "start_timer",
+        "expected_args": {
+            "duration_minutes": 90,
+            "timer_name": "bread"
+        }
+    },
+    {
+        "test_id": "log_water_intake_13",
+        "spoken_text": "I drank a big 24 ounce bottle of water, can you note that down?",
+        "expected_tool": "log_water_intake",
+        "expected_args": {
+            "amount": 24,
+            "unit": "oz"
+        }
+    },
+    {
+        "test_id": "log_water_intake_14",
+        "spoken_text": "Add two cups of water to my daily total.",
         "expected_tool": "log_water_intake",
         "expected_args": {
             "amount": 2,
-            "unit": "cup"
+            "unit": "cups"
         }
     },
     {
-        "test_id": "log_water_intake_8",
-        "spoken_text": "Make a note that I finished my 750ml water bottle.",
-        "expected_tool": "log_water_intake",
+        "test_id": "find_recipe_15",
+        "spoken_text": "I have some ground beef, what should I cook with it?",
+        "expected_tool": "find_recipe",
         "expected_args": {
-            "amount": 750,
-            "unit": "ml"
+            "ingredient": "ground beef"
         }
     },
     {
-        "test_id": "send_quick_note_9",
-        "spoken_text": "Tell my project manager I've pushed the latest code.",
-        "expected_tool": "send_quick_note",
+        "test_id": "find_recipe_16",
+        "spoken_text": "Find me a Mexican dish that uses avocados.",
+        "expected_tool": "find_recipe",
         "expected_args": {
-            "contact_name": "Project Manager",
-            "message": "I've pushed the latest code."
+            "ingredient": "avocado",
+            "cuisine_type": "Mexican"
         }
     },
     {
-        "test_id": "send_quick_note_10",
-        "spoken_text": "Send a note to David asking 'Did you get my email?'",
-        "expected_tool": "send_quick_note",
+        "test_id": "get_world_time_17",
+        "spoken_text": "I need to know the current time in Sydney to schedule a call.",
+        "expected_tool": "get_world_time",
         "expected_args": {
-            "contact_name": "David",
-            "message": "Did you get my email?"
+            "city": "Sydney"
+        }
+    },
+    {
+        "test_id": "get_world_time_18",
+        "spoken_text": "Is it daytime or nighttime in London right now?",
+        "expected_tool": "get_world_time",
+        "expected_args": {
+            "city": "London"
+        }
+    },
+    {
+        "test_id": "tell_a_joke_19",
+        "spoken_text": "I could use a good laugh right now.",
+        "expected_tool": "tell_a_joke",
+        "expected_args": {
+            "category": "any"
+        }
+    },
+    {
+        "test_id": "tell_a_joke_20",
+        "spoken_text": "Hit me with one of your best dad jokes.",
+        "expected_tool": "tell_a_joke",
+        "expected_args": {
+            "category": "dad"
         }
     }
 ]
