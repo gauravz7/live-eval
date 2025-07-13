@@ -116,7 +116,8 @@ def analyze_results(test_cases: List[Dict[str, Any]]):
     with open(config.SERVER_LOG_FILE, 'r') as f:
         actual_calls = [json.loads(line) for line in f]
 
-    passed_tests = 0
+    tool_match_passed = 0
+    tool_and_params_match_passed = 0
     failed_tests = 0
     
     print("\n--- Detailed Test Case Results ---")
@@ -133,6 +134,8 @@ def analyze_results(test_cases: List[Dict[str, Any]]):
 
         actual = actual_calls_by_id[test_id]
         errors = []
+        tool_match = False
+        params_match = False
 
         # 1. Check if a tool was called when one was expected
         if actual["tool_name"] == "NO_TOOL_CALLED":
@@ -141,30 +144,50 @@ def analyze_results(test_cases: List[Dict[str, Any]]):
                 errors.append(f"  - Model response: '{actual['model_response_transcription']}'")
         else:
             # 2. Check if the correct tool was called
-            if expected["expected_tool"] != actual["tool_name"]:
+            if expected["expected_tool"] == actual["tool_name"]:
+                tool_match = True
+                # 3. If tool is correct, check parameters
+                if expected.get("expected_args") == actual.get("arguments"):
+                    params_match = True
+                else:
+                    errors.append(f"Parameter mismatch for tool '{actual['tool_name']}'.")
+                    errors.append(f"  - Expected: {expected.get('expected_args')}")
+                    errors.append(f"  - Got: {actual.get('arguments')}")
+            else:
                 errors.append(f"Expected tool '{expected['expected_tool']}', but got '{actual['tool_name']}'.")
 
         # 4. Report results
-        if not errors:
-            print(f"✅ PASSED: Correctly called '{actual['tool_name']}' in {actual['execution_time_ms']}ms.")
-            passed_tests += 1
-        else:
-            print(f"❌ FAILED:")
+        if tool_match and params_match:
+            print(f"✅ PASSED (Tool & Params): Correctly called '{actual['tool_name']}' with matching arguments in {actual['execution_time_ms']}ms.")
+            tool_match_passed += 1
+            tool_and_params_match_passed += 1
+        elif tool_match:
+            print(f"⚠️ PASSED (Tool Only): Correctly called '{actual['tool_name']}' but with incorrect parameters.")
+            tool_match_passed += 1
+            failed_tests += 1 # This is now considered a failure for the overall accuracy
             for error in errors:
                 print(f"  - {error}")
+        else:
+            print(f"❌ FAILED:")
             failed_tests += 1
+            for error in errors:
+                print(f"  - {error}")
 
     # --- Final Summary ---
     total_tests = len(test_cases)
-    accuracy = (passed_tests / total_tests) * 100 if total_tests > 0 else 0
+    tool_accuracy = (tool_match_passed / total_tests) * 100 if total_tests > 0 else 0
+    tool_and_params_accuracy = (tool_and_params_match_passed / total_tests) * 100 if total_tests > 0 else 0
 
     print("\n--- Test Run Complete ---")
     print(f"Date: {datetime.now().strftime('%A, %B %d, %Y at %I:%M %p')}")
     print("-----------------------------------------------------")
     print(f"Total Test Cases: {total_tests}")
-    print(f"✅ Passed: {passed_tests}")
+    print(f"✅ Tool Match Passed: {tool_match_passed}")
+    print(f"✅ Tool & Params Match Passed: {tool_and_params_match_passed}")
     print(f"❌ Failed: {failed_tests}")
-    print(f"📈 Accuracy: {accuracy:.1f}%")
+    print("-----------------------------------------------------")
+    print(f"📈 Tool Call Accuracy: {tool_accuracy:.1f}%")
+    print(f"📈 Tool & Parameter Accuracy: {tool_and_params_accuracy:.1f}%")
     print("-----------------------------------------------------")
 
 

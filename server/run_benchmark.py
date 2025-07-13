@@ -20,6 +20,9 @@ def main():
     models = ['gemini-live-2.5-flash-preview-native-audio', 'gemini-live-2.5-flash']
     results = {}
 
+    for model in models:
+        results[model] = {}
+
     for size in tool_sizes:
         print(f"\n--- Testing with {size} tools ---")
 
@@ -31,8 +34,8 @@ def main():
 
         for model in models:
             print(f"\n--- Testing with model: {model} ---")
-            if model not in results:
-                results[model] = {}
+            if size not in results[model]:
+                results[model][size] = {}
 
             # Step 3: Start server
             server_process = subprocess.Popen(["python3", "server_eval.py", "--no-save-audio", "--model", model])
@@ -45,18 +48,30 @@ def main():
             server_process.kill()
 
             # Extract accuracy from the output
+            tool_accuracy = None
+            param_accuracy = None
             for line in output.splitlines():
-                if "Accuracy:" in line:
-                    accuracy = float(line.split(":")[1].strip().replace("%", ""))
-                    results[model][size] = accuracy
-                    print(f"Accuracy for {size} tools with model {model}: {accuracy}%")
-                    break
+                if "Tool Call Accuracy:" in line:
+                    tool_accuracy = float(line.split(":")[1].strip().replace("%", ""))
+                if "Tool & Parameter Accuracy:" in line:
+                    param_accuracy = float(line.split(":")[1].strip().replace("%", ""))
+
+            if tool_accuracy is not None and param_accuracy is not None:
+                results[model][size] = {
+                    "tool_accuracy": tool_accuracy,
+                    "param_accuracy": param_accuracy
+                }
+                print(f"Tool Accuracy for {size} tools with model {model}: {tool_accuracy}%")
+                print(f"Tool & Param Accuracy for {size} tools with model {model}: {param_accuracy}%")
+            else:
+                print(f"Could not parse accuracy for {size} tools with model {model}")
+
 
     print("\n--- Benchmark Results ---")
     for model, model_results in results.items():
         print(f"\nModel: {model}")
-        for size, accuracy in model_results.items():
-            print(f"Tools: {size}, Accuracy: {accuracy}%")
+        for size, acc_results in model_results.items():
+            print(f"  Tools: {size}, Tool Accuracy: {acc_results.get('tool_accuracy')}%, Tool & Param Accuracy: {acc_results.get('param_accuracy')}%")
 
     # Save results to a file
     timestamp = time.strftime("%Y%m%d-%H%M%S")
