@@ -15,7 +15,8 @@ def run_command(command, env=None):
 
 def main():
     """Main function to run the benchmark."""
-    tool_sizes = [5, 10, 15, 20, 25, 30]
+    #tool_sizes = [5, 10, 15, 20, 25, 30]
+    tool_sizes = [1,2]
     models = ['gemini-live-2.5-flash-preview-native-audio', 'gemini-live-2.5-flash']
     results = {}
 
