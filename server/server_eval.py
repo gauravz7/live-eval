@@ -155,6 +155,7 @@ class LiveAPIWebSocketServer(BaseWebSocketServer):
         self.active_clients[client_id] = websocket
 
         try:
+            #print ("MODEL :", MODEL )
             async with client.aio.live.connect(model=MODEL, config=CONFIG) as session:
                 self.session = session
                 
@@ -299,23 +300,26 @@ class LiveAPIWebSocketServer(BaseWebSocketServer):
                     wave_file.close()
             print("✅ Audio recording finished")
 
-async def main(save_audio: bool = True):
+async def main(model: str, save_audio: bool = True):
     main_start_time = (time.time() - PROGRAM_START_TIME) * 1000
     print(f"⏰ Reached main() in {main_start_time:.2f}ms")
     print("🚀 Starting WebSocket server...")
     print(f"🛠️ Available tools: {[tool['name'] for tool in TOOLS_DEFINITION]}")
     
     server = LiveAPIWebSocketServer(save_audio_files=save_audio)
+    global MODEL
+    MODEL = model
     await server.start()
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
+    parser.add_argument("--model", type=str, default=config.MODEL, help="The model to use for the server.")
     parser.add_argument("--no-save-audio", action="store_false", dest="save_audio")
     args = parser.parse_args()
 
     try:
-        asyncio.run(main(save_audio=args.save_audio))
+        asyncio.run(main(model=args.model, save_audio=args.save_audio))
     except KeyboardInterrupt:
         print("Exiting...")
     except Exception as e:

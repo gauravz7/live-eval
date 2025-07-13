@@ -2,45 +2,42 @@
 
 TOOLS_DEFINITION = [
   {
+    "name": "set_focus_timer",
+    "description": "Sets a timer for a focused work session, optionally followed by a short break.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "duration_minutes": {
+          "type": "number",
+          "description": "The duration of the focus session in minutes. For example, 25 minutes.",
+          "minimum": 1.0,
+          "maximum": 180.0
+        },
+        "break_minutes": {
+          "type": "number",
+          "description": "The duration of the optional break after the session, in minutes. For example, 5 minutes.",
+          "minimum": 1.0,
+          "maximum": 60.0
+        }
+      },
+      "required": [
+        "duration_minutes"
+      ]
+    }
+  },
+  {
     "name": "get_world_time",
-    "description": "Fetches the current local time for any major city in the world.",
+    "description": "Retrieves the current local time for any major city in the world.",
     "parameters": {
       "type": "object",
       "properties": {
         "city_name": {
           "type": "string",
-          "description": "The name of the city for which to find the time, for example, 'Tokyo' or 'San Francisco'."
+          "description": "The name of the city to get the current time for, such as 'Tokyo', 'New York', or 'Paris'."
         }
       },
       "required": [
         "city_name"
-      ]
-    }
-  },
-  {
-    "name": "generate_story_prompt",
-    "description": "Creates a unique story prompt based on a specified genre and an optional keyword.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "genre": {
-          "type": "string",
-          "description": "The genre for the story prompt.",
-          "enum": [
-            "fantasy",
-            "sci-fi",
-            "mystery",
-            "horror",
-            "adventure"
-          ]
-        },
-        "keyword": {
-          "type": "string",
-          "description": "An optional specific keyword or character to include in the story prompt, like 'dragon' or 'cyborg'."
-        }
-      },
-      "required": [
-        "genre"
       ]
     }
   }

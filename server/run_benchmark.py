@@ -24,10 +24,10 @@ def main():
         print(f"\n--- Testing with {size} tools ---")
 
         # Step 1: Generate tools
-        run_command(f"python3 live-eval/server/generate_tool_data.py --num_tools {size}")
+        run_command(f"python3 generate_tool_data.py --num_tools {size}")
 
         # Step 2: Generate eval data
-        run_command("python3 live-eval/server/generate_eval_data.py")
+        run_command("python3 generate_eval_data.py")
 
         for model in models:
             print(f"\n--- Testing with model: {model} ---")
@@ -35,13 +35,11 @@ def main():
                 results[model] = {}
 
             # Step 3: Start server
-            env = os.environ.copy()
-            env["MODEL"] = model
-            server_process = subprocess.Popen(["python3", "live-eval/server/server_eval.py", "--no-save-audio"], env=env)
+            server_process = subprocess.Popen(["python3", "server_eval.py", "--no-save-audio", "--model", model])
             time.sleep(5)  # Give the server time to start
 
             # Step 4: Run test
-            output = run_command("python3 live-eval/server/run_test.py")
+            output = run_command("python3 run_test.py")
 
             # Kill the server process
             server_process.kill()

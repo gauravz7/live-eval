@@ -19,7 +19,7 @@ LOCATION = "us-central1"
 #LIVE_API_MODEL_NAME = 'gemini-live-2.5-flash-preview-native-audio'
 
 MODEL = 'gemini-live-2.5-flash'
-LIVE_API_MODEL_NAME = 'gemini-live-2.5-flash'
+#LIVE_API_MODEL_NAME = 'gemini-live-2.5-flash'
 VOICE_NAME = "Puck"
 
 # --- Text-to-Speech (TTS) Parameters ---

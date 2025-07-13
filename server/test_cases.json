@@ -1,35 +1,35 @@
 [
     {
-        "test_id": "get_world_time_1",
-        "spoken_text": "I'm about to call my friend in the capital of France, what's the local hour there?",
+        "test_id": "set_focus_timer_1",
+        "spoken_text": "I need to get this report done. Set a timer for a 25 minute work session and then a five minute break.",
+        "expected_tool": "set_focus_timer",
+        "expected_args": {
+            "duration_minutes": 25,
+            "break_minutes": 5
+        }
+    },
+    {
+        "test_id": "set_focus_timer_2",
+        "spoken_text": "I need to really buckle down for half an hour.",
+        "expected_tool": "set_focus_timer",
+        "expected_args": {
+            "duration_minutes": 30
+        }
+    },
+    {
+        "test_id": "get_world_time_3",
+        "spoken_text": "I wonder if my friends in Paris are asleep yet.",
         "expected_tool": "get_world_time",
         "expected_args": {
             "city_name": "Paris"
         }
     },
     {
-        "test_id": "get_world_time_2",
-        "spoken_text": "I wonder if it's too late to message my colleague in New York City.",
+        "test_id": "get_world_time_4",
+        "spoken_text": "What's the current time for the folks in New York?",
         "expected_tool": "get_world_time",
         "expected_args": {
-            "city_name": "New York City"
-        }
-    },
-    {
-        "test_id": "generate_story_prompt_3",
-        "spoken_text": "I want to write something about a quest for a lost city. Could you give me an adventure-style idea?",
-        "expected_tool": "generate_story_prompt",
-        "expected_args": {
-            "genre": "adventure",
-            "keyword": "lost city"
-        }
-    },
-    {
-        "test_id": "generate_story_prompt_4",
-        "spoken_text": "I need inspiration for a spooky tale. Something that will really give me the creeps.",
-        "expected_tool": "generate_story_prompt",
-        "expected_args": {
-            "genre": "horror"
+            "city_name": "New York"
         }
     }
 ]
