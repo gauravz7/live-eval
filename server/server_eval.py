@@ -249,7 +249,7 @@ class LiveAPIWebSocketServer(BaseWebSocketServer):
                                             if not turn_start_time:
                                                 turn_start_time = time.time()
                                                 turn_count += 1
-                                                print(f"🎤 TURN {turn_count}: VAD detected")
+                                                print(f"🎤 TURN {turn_count}: Turn detected")
                                             
                                             await self.safe_send(websocket, {"type": "itext", "data": text})
                                     
