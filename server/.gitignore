@@ -1,2 +1,11 @@
 # Benchmark results
 benchmark_results_*.json
+
+# Environment files
+.env
+
+# Results folder
+/results
+
+# Virtual environment
+.venv
