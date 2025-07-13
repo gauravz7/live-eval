@@ -5,7 +5,9 @@ benchmark_results_*.json
 .env
 
 # Results folder
-server/results/
+**/results/
+**/server_results/
+**/client_results/
 server/server_logging/
 
 # Virtual environment
