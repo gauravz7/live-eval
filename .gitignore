@@ -15,10 +15,12 @@ server/server_logging/
 
 # Mac specific
 server/.DS_Store
+.DS_Store
 
 # Log files
 server/*.log
+*.log
 server/client_test_log.jsonl
-
+client_test_log.jsonl
 # Python specific
 __pycache__/
