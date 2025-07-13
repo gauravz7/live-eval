@@ -6,6 +6,8 @@ benchmark_results_*.json
 
 # Results folder
 /results
+/results
+/sever/results
 
 # Virtual environment
 .venv
