@@ -8,6 +8,8 @@ benchmark_results_*.json
 /results
 /results
 /sever/results
+/sever/server_logging
+/sever/results/*
 
 # Virtual environment
 .venv
