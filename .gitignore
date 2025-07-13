@@ -14,8 +14,7 @@ server/server_logging/
 .venv
 
 # Mac specific
-server/.DS_Store
-.DS_Store
+**/.DS_Store
 
 # Log files
 server/*.log
