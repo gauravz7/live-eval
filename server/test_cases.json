@@ -1,35 +1,356 @@
 [
     {
-        "test_id": "set_focus_timer_1",
-        "spoken_text": "I need to get this report done. Set a timer for a 25 minute work session and then a five minute break.",
-        "expected_tool": "set_focus_timer",
+        "test_id": "set_thermostat_temperature_1",
+        "spoken_text": "It's a bit chilly downstairs, can you make it 70 degrees fahrenheit?",
+        "expected_tool": "set_thermostat_temperature",
         "expected_args": {
-            "duration_minutes": 25,
-            "break_minutes": 5
+            "temperature": 70,
+            "unit": "fahrenheit",
+            "zone": "downstairs"
         }
     },
     {
-        "test_id": "set_focus_timer_2",
-        "spoken_text": "I need to really buckle down for half an hour.",
-        "expected_tool": "set_focus_timer",
+        "test_id": "set_thermostat_temperature_2",
+        "spoken_text": "Could you please set the heat to 22 celsius for the entire house?",
+        "expected_tool": "set_thermostat_temperature",
         "expected_args": {
+            "temperature": 22,
+            "unit": "celsius",
+            "zone": "all"
+        }
+    },
+    {
+        "test_id": "set_light_color_3",
+        "spoken_text": "Let's make the living room feel cozy, change the lights to orange.",
+        "expected_tool": "set_light_color",
+        "expected_args": {
+            "room": "living_room",
+            "color": "orange"
+        }
+    },
+    {
+        "test_id": "set_light_color_4",
+        "spoken_text": "I want to relax in the bedroom, please set the light to a calming blue.",
+        "expected_tool": "set_light_color",
+        "expected_args": {
+            "room": "bedroom",
+            "color": "blue"
+        }
+    },
+    {
+        "test_id": "lock_door_5",
+        "spoken_text": "I'm leaving now, please make sure the front door is locked.",
+        "expected_tool": "lock_door",
+        "expected_args": {
+            "door_name": "front_door",
+            "lock_state": "locked"
+        }
+    },
+    {
+        "test_id": "lock_door_6",
+        "spoken_text": "I need to get into the garage, can you unlock that door for me?",
+        "expected_tool": "lock_door",
+        "expected_args": {
+            "door_name": "garage_door",
+            "lock_state": "unlocked"
+        }
+    },
+    {
+        "test_id": "set_window_blinds_position_7",
+        "spoken_text": "The sun is too bright in my office, can you close the south blinds all the way?",
+        "expected_tool": "set_window_blinds_position",
+        "expected_args": {
+            "position_percent": 0,
+            "window_location": "office_south"
+        }
+    },
+    {
+        "test_id": "set_window_blinds_position_8",
+        "spoken_text": "Let some light in the living room, open the main blinds about three-quarters of the way.",
+        "expected_tool": "set_window_blinds_position",
+        "expected_args": {
+            "position_percent": 75,
+            "window_location": "living_room_main"
+        }
+    },
+    {
+        "test_id": "activate_sprinkler_system_9",
+        "spoken_text": "The front lawn looks a bit dry, run the sprinklers for 20 minutes.",
+        "expected_tool": "activate_sprinkler_system",
+        "expected_args": {
+            "zone": "front_lawn",
+            "duration_minutes": 20
+        }
+    },
+    {
+        "test_id": "activate_sprinkler_system_10",
+        "spoken_text": "Could you water the garden beds for half an hour?",
+        "expected_tool": "activate_sprinkler_system",
+        "expected_args": {
+            "zone": "garden_beds",
             "duration_minutes": 30
         }
     },
     {
-        "test_id": "get_world_time_3",
-        "spoken_text": "I wonder if my friends in Paris are asleep yet.",
-        "expected_tool": "get_world_time",
+        "test_id": "toggle_smart_plug_11",
+        "spoken_text": "Could you please turn on the holiday lights?",
+        "expected_tool": "toggle_smart_plug",
         "expected_args": {
-            "city_name": "Paris"
+            "plug_id": "holiday_lights",
+            "state": "on"
         }
     },
     {
-        "test_id": "get_world_time_4",
-        "spoken_text": "What's the current time for the folks in New York?",
-        "expected_tool": "get_world_time",
+        "test_id": "toggle_smart_plug_12",
+        "spoken_text": "I'm done working, please shut off my desk lamp.",
+        "expected_tool": "toggle_smart_plug",
         "expected_args": {
-            "city_name": "New York"
+            "plug_id": "desk_lamp",
+            "state": "off"
+        }
+    },
+    {
+        "test_id": "set_volume_13",
+        "spoken_text": "This movie is too quiet, can you turn the soundbar up to 75?",
+        "expected_tool": "set_volume",
+        "expected_args": {
+            "volume_level": 75,
+            "device": "soundbar"
+        }
+    },
+    {
+        "test_id": "set_volume_14",
+        "spoken_text": "Please lower the volume on my headphones to a comfortable 30 percent.",
+        "expected_tool": "set_volume",
+        "expected_args": {
+            "volume_level": 30,
+            "device": "headphones"
+        }
+    },
+    {
+        "test_id": "play_media_by_genre_15",
+        "spoken_text": "I'd like to listen to a sci-fi audiobook.",
+        "expected_tool": "play_media_by_genre",
+        "expected_args": {
+            "media_type": "audiobook",
+            "genre": "sci_fi"
+        }
+    },
+    {
+        "test_id": "play_media_by_genre_16",
+        "spoken_text": "Put on some jazz music for me.",
+        "expected_tool": "play_media_by_genre",
+        "expected_args": {
+            "media_type": "music",
+            "genre": "jazz"
+        }
+    },
+    {
+        "test_id": "skip_track_17",
+        "spoken_text": "I don't like this song, go to the next one.",
+        "expected_tool": "skip_track",
+        "expected_args": {
+            "direction": "forward",
+            "count": 1
+        }
+    },
+    {
+        "test_id": "skip_track_18",
+        "spoken_text": "Wait, I missed that, can you go back two songs?",
+        "expected_tool": "skip_track",
+        "expected_args": {
+            "direction": "backward",
+            "count": 2
+        }
+    },
+    {
+        "test_id": "seek_to_timestamp_19",
+        "spoken_text": "Can you jump to the 15 minute and 45 second mark of this podcast?",
+        "expected_tool": "seek_to_timestamp",
+        "expected_args": {
+            "minutes": 15,
+            "seconds": 45
+        }
+    },
+    {
+        "test_id": "seek_to_timestamp_20",
+        "spoken_text": "Go to two minutes and ten seconds into the video.",
+        "expected_tool": "seek_to_timestamp",
+        "expected_args": {
+            "minutes": 2,
+            "seconds": 10
+        }
+    },
+    {
+        "test_id": "set_timer_21",
+        "spoken_text": "I'm putting pasta on, can you set a timer for 10 minutes?",
+        "expected_tool": "set_timer",
+        "expected_args": {
+            "duration_minutes": 10,
+            "timer_label": "pasta"
+        }
+    },
+    {
+        "test_id": "set_timer_22",
+        "spoken_text": "Start a 45 minute timer for my laundry.",
+        "expected_tool": "set_timer",
+        "expected_args": {
+            "duration_minutes": 45,
+            "timer_label": "laundry"
+        }
+    },
+    {
+        "test_id": "set_alarm_23",
+        "spoken_text": "I need to wake up at 6:30 AM, please set an alarm with the bells sound.",
+        "expected_tool": "set_alarm",
+        "expected_args": {
+            "hour": 6,
+            "minute": 30,
+            "alarm_sound": "bells"
+        }
+    },
+    {
+        "test_id": "set_alarm_24",
+        "spoken_text": "Set an alarm for 10 PM with the harp sound as a reminder.",
+        "expected_tool": "set_alarm",
+        "expected_args": {
+            "hour": 22,
+            "minute": 0,
+            "alarm_sound": "harp"
+        }
+    },
+    {
+        "test_id": "cancel_timer_25",
+        "spoken_text": "The pizza is done early, please cancel that timer.",
+        "expected_tool": "cancel_timer",
+        "expected_args": {
+            "timer_label": "pizza"
+        }
+    },
+    {
+        "test_id": "cancel_timer_26",
+        "spoken_text": "I'm done reading, you can stop the reading timer now.",
+        "expected_tool": "cancel_timer",
+        "expected_args": {
+            "timer_label": "reading"
+        }
+    },
+    {
+        "test_id": "snooze_alarm_27",
+        "spoken_text": "Ugh, five more minutes please.",
+        "expected_tool": "snooze_alarm",
+        "expected_args": {
+            "duration_minutes": 5
+        }
+    },
+    {
+        "test_id": "snooze_alarm_28",
+        "spoken_text": "Just hit snooze for me.",
+        "expected_tool": "snooze_alarm",
+        "expected_args": {
+            "duration_minutes": 9
+        }
+    },
+    {
+        "test_id": "get_weather_forecast_29",
+        "spoken_text": "What's the weather like in Tokyo today?",
+        "expected_tool": "get_weather_forecast",
+        "expected_args": {
+            "city": "tokyo",
+            "day": "today"
+        }
+    },
+    {
+        "test_id": "get_weather_forecast_30",
+        "spoken_text": "Will I need a coat in New York tomorrow?",
+        "expected_tool": "get_weather_forecast",
+        "expected_args": {
+            "city": "new_york",
+            "day": "tomorrow"
+        }
+    },
+    {
+        "test_id": "get_stock_price_31",
+        "spoken_text": "Can you look up the current stock price for Google?",
+        "expected_tool": "get_stock_price",
+        "expected_args": {
+            "ticker_symbol": "GOOG"
+        }
+    },
+    {
+        "test_id": "get_stock_price_32",
+        "spoken_text": "How is Microsoft's stock performing right now?",
+        "expected_tool": "get_stock_price",
+        "expected_args": {
+            "ticker_symbol": "MSFT"
+        }
+    },
+    {
+        "test_id": "get_currency_exchange_rate_33",
+        "spoken_text": "What is the exchange rate between the Canadian and Australian dollar?",
+        "expected_tool": "get_currency_exchange_rate",
+        "expected_args": {
+            "from_currency": "CAD",
+            "to_currency": "AUD"
+        }
+    },
+    {
+        "test_id": "get_currency_exchange_rate_34",
+        "spoken_text": "How many US dollars can I get for one British Pound?",
+        "expected_tool": "get_currency_exchange_rate",
+        "expected_args": {
+            "from_currency": "GBP",
+            "to_currency": "USD"
+        }
+    },
+    {
+        "test_id": "toggle_dark_mode_35",
+        "spoken_text": "It's bright in here, can you enable the dark theme?",
+        "expected_tool": "toggle_dark_mode",
+        "expected_args": {
+            "enabled": true
+        }
+    },
+    {
+        "test_id": "toggle_dark_mode_36",
+        "spoken_text": "Switch back to the light theme, please.",
+        "expected_tool": "toggle_dark_mode",
+        "expected_args": {
+            "enabled": false
+        }
+    },
+    {
+        "test_id": "set_notification_level_37",
+        "spoken_text": "I don't want to be disturbed, turn off all notifications for my messages.",
+        "expected_tool": "set_notification_level",
+        "expected_args": {
+            "app_name": "messages",
+            "level": "none"
+        }
+    },
+    {
+        "test_id": "set_notification_level_38",
+        "spoken_text": "Make sure I see all my calendar alerts, set them to all.",
+        "expected_tool": "set_notification_level",
+        "expected_args": {
+            "app_name": "calendar",
+            "level": "all"
+        }
+    },
+    {
+        "test_id": "change_system_language_39",
+        "spoken_text": "Can you change the interface to British English?",
+        "expected_tool": "change_system_language",
+        "expected_args": {
+            "language_code": "en_GB"
+        }
+    },
+    {
+        "test_id": "change_system_language_40",
+        "spoken_text": "Please switch the system's language to German.",
+        "expected_tool": "change_system_language",
+        "expected_args": {
+            "language_code": "de_DE"
         }
     }
 ]

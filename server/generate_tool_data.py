@@ -37,52 +37,48 @@ def generate_prompt(num_tools: int):
     
     prompt = f"""
 You are an expert tool definition generator for a voice-controlled AI system.
-Your task is to generate a list of {num_tools} diverse and creative tool definitions.
-The tools should cover a wide range of domains, such as productivity, finance, travel, entertainment, utilities, and more.
-Each tool definition must include a name, a description, and a properly structured JSON schema for its parameters.
-Keep the tools simple with 1-3 parameters each, and ensure they are easy to understand and use.
+Your task is to generate a list of {num_tools} diverse and creative tool definitions that are easy to measure for accuracy.
 
-CRITICAL: You must follow this EXACT structure for each tool:
+**CRITICAL RULES FOR PARAMETER GENERATION:**
+1.  **NO LONG TEXT:** Parameters must NOT be for long, free-form text (e.g., no 'email_body', 'note_content', 'message'). All parameters must be simple, discrete, and easily measurable.
+2.  **USE ENUMS FOR STRINGS:** Every parameter with `type: "string"` MUST have an `enum` field with a list of possible categorical values. For example: `"status": {{ "type": "string", "description": "The status to set", "enum": ["active", "paused", "completed"] }}`.
+3.  **PRIORITIZE DISCRETE TYPES:** Strongly prefer parameter types like `integer`, `number`, and `boolean` over strings.
+4.  **SIMPLE & CLEAR:** Keep the tools simple with 1-3 parameters each. Descriptions should be clear and actionable.
+5.  **SNAKE CASE:** Tool and parameter names must be in `snake_case`.
 
+**EXAMPLE OF A GOOD, MEASURABLE TOOL:**
+```json
 {{
-    "name": "tool_name_in_snake_case",
-    "description": "Clear description of what the tool does.",
+    "name": "set_light_brightness",
+    "description": "Adjusts the brightness of a smart light.",
     "parameters": {{
         "type": "object",
         "properties": {{
-            "parameter_name": {{
-                "type": "string",
-                "description": "Description of the parameter with examples if helpful"
-            }},
-            "optional_parameter": {{
-                "type": "number",
-                "description": "Description of optional parameter",
+            "brightness_level": {{
+                "type": "integer",
+                "description": "The desired brightness level.",
                 "minimum": 0,
                 "maximum": 100
+            }},
+            "room": {{
+                "type": "string",
+                "description": "The room where the light is located.",
+                "enum": ["living_room", "bedroom", "kitchen", "office"]
             }}
         }},
-        "required": ["parameter_name"]
+        "required": ["brightness_level", "room"]
     }}
 }}
+```
 
-IMPORTANT RULES:
-1. Each parameter in "properties" must be an object with "type" and "description" fields
-2. Use appropriate types: "string", "number", "integer", "boolean", "array"
-3. Include validation like "minimum", "maximum", "enum" where appropriate
-4. The "required" array should list only the mandatory parameter names
-5. Tool names should be descriptive and use snake_case
-6. Descriptions should be clear and actionable
+Generate {num_tools} diverse tools that follow these strict rules, covering categories like:
+- Smart Home (lights, thermostat, locks)
+- Media Control (play, pause, volume)
+- Timers & Alarms (set, cancel)
+- Simple Lookups (stock price, weather)
+- Settings (dark_mode, notifications)
 
-Generate {num_tools} diverse tools covering different categories like:
-- Productivity tools (calendar, notes, reminders)
-- Finance tools (calculations, conversions)
-- Travel tools (weather, currency, time zones)
-- Entertainment tools (jokes, trivia, music)
-- Utility tools (calculations, conversions, lookups)
-- Health tools (fitness, nutrition)
-- Communication tools (messaging, social)
-
-Make sure each tool is unique and useful for voice interaction.
+Every single tool you generate must adhere to the parameter rules above to ensure they are measurable.
 """
     return prompt
 

@@ -37,14 +37,20 @@ def generate_prompt(tools_definition):
     
     prompt = f"""
 You are an expert test case generator for a voice-controlled AI system.
-Your task is to generate a list of test cases based on the provided tool definitions.
-For each tool, create exactly two unique test cases.
-Make it ambigous enough that the model has to think about the tool call, but not so ambiguous that it can't figure out what to do.
+Your task is to generate a list of test cases based on the provided tool definitions, which only use discrete and categorical parameters.
+
+**CRITICAL RULES FOR TEST CASE GENERATION:**
+1.  **CREATE 2 UNIQUE TEST CASES:** For each tool definition provided, generate exactly two unique test cases.
+2.  **NATURAL & AMBIGUOUS SPOKEN TEXT:** The `spoken_text` should be natural-sounding and conversational. It should be slightly ambiguous to make the model work, but not so unclear that the correct tool and parameters are impossible to determine. For example, instead of "Set brightness to 80," use "It's a bit too bright in here, can you turn it down to about 80%."
+3.  **EXACT ARGUMENT MATCHING:** The `expected_args` you generate MUST use the exact values defined in the tool's `enum` or fall within the specified `minimum` and `maximum` for numbers.
+4.  **VARY THE TESTS:** For each tool, create test cases that cover different parameters or scenarios. For instance, one test might use a required parameter, and the second could use both required and optional ones.
 
 **Tool Definitions:**
 ```json
 {json.dumps(tools_definition, indent=2)}
 ```
+
+Generate the list of test cases following these rules precisely.
 """
     return prompt
 

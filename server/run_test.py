@@ -31,10 +31,15 @@ def load_test_cases_from_json(file_path: str) -> List[Dict[str, Any]]:
         return []
 
 
-async def run_test_cases(test_cases: List[Dict[str, Any]]):
+async def run_test_cases(test_cases: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
-    Executes the generated test cases against the LiveAPI server.
+    Executes the generated test cases against the LiveAPI server with a retry mechanism.
+    Returns a list of test cases that were successfully executed.
     """
+    max_retries = 3
+    retry_delay = 5  # seconds
+    executed_test_cases = []
+
     for i, test_case in enumerate(test_cases):
         print(f"\n--- Running Test Case {i+1}/{len(test_cases)} ---")
         print(f"Spoken Text: {test_case['spoken_text']}")
@@ -45,61 +50,72 @@ async def run_test_cases(test_cases: List[Dict[str, Any]]):
             print("Skipping test case due to TTS failure.")
             continue
 
-        try:
-            live_api_endpoint = "ws://localhost:8765"
-            print(f"Connecting to WebSocket at: {live_api_endpoint}")
-            async with websockets.connect(live_api_endpoint) as websocket:
-                # Send the test_id to the server
-                await websocket.send(json.dumps({
-                    "type": "start_test",
-                    "test_id": test_case['test_id']
-                }))
-
-                # Stream the audio in chunks to simulate a real-time feed
-                chunk_size = 1024  # Send 1KB chunks
-                total_chunks = (len(audio_content) + chunk_size - 1) // chunk_size
-                
-                print(f"Streaming {len(audio_content)} bytes in {total_chunks} chunks...")
-
-                for i in range(0, len(audio_content), chunk_size):
-                    chunk = audio_content[i:i+chunk_size]
-                    audio_b64 = base64.b64encode(chunk).decode('utf-8')
-                    
+        for attempt in range(max_retries):
+            try:
+                live_api_endpoint = "ws://localhost:8765"
+                print(f"Connecting to WebSocket at: {live_api_endpoint} (Attempt {attempt + 1}/{max_retries})")
+                async with websockets.connect(live_api_endpoint) as websocket:
+                    # Send the test_id to the server
                     await websocket.send(json.dumps({
-                        "type": "audio",
-                        "data": audio_b64
+                        "type": "start_test",
+                        "test_id": test_case['test_id']
                     }))
+
+                    # Stream the audio in chunks to simulate a real-time feed
+                    chunk_size = 1024
+                    total_chunks = (len(audio_content) + chunk_size - 1) // chunk_size
                     
-                    # Small delay to simulate real-time streaming
-                    await asyncio.sleep(0.02) 
+                    print(f"Streaming {len(audio_content)} bytes in {total_chunks} chunks...")
 
-                print("Finished streaming audio.")
-                # Signal that we are done sending audio
-                await websocket.send(json.dumps({"type": "end"}))
+                    for i in range(0, len(audio_content), chunk_size):
+                        chunk = audio_content[i:i+chunk_size]
+                        audio_b64 = base64.b64encode(chunk).decode('utf-8')
+                        
+                        await websocket.send(json.dumps({
+                            "type": "audio",
+                            "data": audio_b64
+                        }))
+                        
+                        await asyncio.sleep(0.02)
 
-                # Wait for the server to signal that the turn is complete
-                print("Waiting for server to complete the turn...")
-                while True:
-                    try:
-                        message = await asyncio.wait_for(websocket.recv(), timeout=5.0)
-                        data = json.loads(message)
-                        if data.get("type") == "turn_complete" or data.get("type") == "ready":
-                            print("✅ Received turn_complete signal from server.")
+                    print("Finished streaming audio.")
+                    await websocket.send(json.dumps({"type": "end"}))
+
+                    print("Waiting for server to complete the turn...")
+                    while True:
+                        try:
+                            message = await asyncio.wait_for(websocket.recv(), timeout=10.0) # Increased timeout
+                            data = json.loads(message)
+                            if data.get("type") == "turn_complete" or data.get("type") == "ready":
+                                print("✅ Received turn_complete signal from server.")
+                                break
+                        except asyncio.TimeoutError:
+                            print("⚠️ Timed out waiting for turn_complete signal.")
                             break
-                    except asyncio.TimeoutError:
-                        print("⚠️ Timed out waiting for turn_complete signal.")
-                        break
-                    except websockets.exceptions.ConnectionClosed:
-                        print("ℹ️ Connection closed by server.")
-                        break
-                    except Exception as e:
-                        print(f"Error while waiting for server response: {e}")
-                        break
+                        except websockets.exceptions.ConnectionClosed:
+                            print("ℹ️ Connection closed by server.")
+                            break
+                        except Exception as e:
+                            print(f"Error while waiting for server response: {e}")
+                            break
+                
+                executed_test_cases.append(test_case)
+                # If successful, break out of the retry loop
+                break
 
-        except Exception as e:
-            print(f"Error connecting to or communicating with the server: {e}")
+            except (websockets.exceptions.ConnectionClosedError, ConnectionRefusedError) as e:
+                print(f"❌ Connection failed on attempt {attempt + 1}: {e}")
+                if attempt < max_retries - 1:
+                    print(f"Retrying in {retry_delay} seconds...")
+                    await asyncio.sleep(retry_delay)
+                else:
+                    print("❌ Max retries reached. Skipping test case.")
+            except Exception as e:
+                print(f"An unexpected error occurred: {e}")
+                break # Don't retry on unknown errors
 
     print("\n--- Test Execution Finished ---")
+    return executed_test_cases
 
 
 def analyze_results(test_cases: List[Dict[str, Any]]):
@@ -150,11 +166,13 @@ def analyze_results(test_cases: List[Dict[str, Any]]):
                 if expected.get("expected_args") == actual.get("arguments"):
                     params_match = True
                 else:
-                    errors.append(f"Parameter mismatch for tool '{actual['tool_name']}'.")
-                    errors.append(f"  - Expected: {expected.get('expected_args')}")
-                    errors.append(f"  - Got: {actual.get('arguments')}")
+                    errors.append("Parameter mismatch.")
+                    errors.append(f"  - Expected Params: {json.dumps(expected.get('expected_args'))}")
+                    errors.append(f"  - Actual Params:   {json.dumps(actual.get('arguments'))}")
             else:
-                errors.append(f"Expected tool '{expected['expected_tool']}', but got '{actual['tool_name']}'.")
+                errors.append("Tool name mismatch.")
+                errors.append(f"  - Expected Tool: '{expected['expected_tool']}'")
+                errors.append(f"  - Actual Tool:   '{actual['tool_name']}'")
 
         # 4. Report results
         if tool_match and params_match:
@@ -202,11 +220,14 @@ if __name__ == "__main__":
     # Step 1: Load Test Cases from JSON using a robust path
     script_dir = os.path.dirname(os.path.abspath(__file__))
     test_cases_path = os.path.join(script_dir, "test_cases.json")
-    test_cases = load_test_cases_from_json(test_cases_path)
+    all_test_cases = load_test_cases_from_json(test_cases_path)
 
     # Step 2: Test Execution
-    asyncio.run(run_test_cases(test_cases))
+    executed_test_cases = asyncio.run(run_test_cases(all_test_cases))
 
     # The client now waits for turn_complete, so a final sleep is not necessary.
     # Step 3: Analysis and Reporting
-    analyze_results(test_cases)
+    if executed_test_cases:
+        analyze_results(executed_test_cases)
+    else:
+        print("\n--- No tests were executed successfully. Cannot analyze results. ---")
